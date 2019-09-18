@@ -7,8 +7,13 @@ import (
 	"time"
 )
 
-type Message struct {
-	Text string
+type Request struct {
+	P1 int
+	P2 int
+}
+
+type Reply struct {
+	Result int
 }
 
 func main() {
@@ -18,16 +23,20 @@ func main() {
 		log.Fatal("Connection error: ", err)
 	}
 	
-	var reply Message
+	var ans Reply
 	for i := 0; i < 10000; i++ {
 		start := time.Now()
 		
-		msg := Message{"Hello Server!"}
-		client.Call("API.Msg_Function", msg, &reply)
+		msg := Request{5, 7}
+		client.Call("RCVR.Msg_Function", msg, &ans)
 		
 		elapsed := time.Since(start)
 		
-		//fmt.Println(reply)
+		//fmt.Println(ans)
 		fmt.Printf("%s\n", elapsed)	
 	}
 }
+
+
+
+
